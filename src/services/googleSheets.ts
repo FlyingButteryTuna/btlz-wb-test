@@ -16,7 +16,7 @@ export function sheetsClient() {
     return google.sheets({ version: "v4", auth: auth() });
 }
 
-export async function writeTraffis(spreadsheetId: string, values: any[]) {
+export async function writeTariffs(spreadsheetId: string, values: any[]) {
     const sheets = sheetsClient();
     try {
         await sheets.spreadsheets.values.clear({
