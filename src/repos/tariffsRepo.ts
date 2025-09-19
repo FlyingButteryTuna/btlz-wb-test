@@ -1,6 +1,13 @@
 import knex from "#postgres/knex.js";
 
-const dec = (s?: string | null) => (s == null ? null : Number(String(s).replace(",", ".")));
+const dec = (s?: string | null): number | null => {
+    if (s == null) return null;
+    const t = String(s).trim();
+    if (t === "" || t === "-") return null;
+
+    const n = Number(t.replace(",", "."));
+    return Number.isFinite(n) ? n : null;
+};
 
 export type TariffRow = {
     date: string;
@@ -56,5 +63,11 @@ export async function upsertDailyTariffs(dateIso: string, warehouses: any[]) {
 }
 
 export async function selectTariffsForDateSorted(dateIso: string) {
-    return knex("daily_box_tariffs").where({ date: dateIso }).orderBy("box_delivery_coef_expr", "asc").select("*");
+    return knex("daily_box_tariffs")
+        .where({ date: dateIso })
+        .orderBy([
+            { column: "box_delivery_coef_expr", order: "asc", nulls: "last" as const },
+            { column: "warehouse_name", order: "asc" },
+        ])
+        .select("*");
 }

@@ -27,22 +27,20 @@ export async function runSheetsUpdateOnce() {
             "box_storage_base",
             "box_storage_coef_expr",
             "box_storage_liter",
-            "updated_at",
         ],
         ...rows.map((r: any) => [
-            r.date,
+            formatDate(r.date),
             r.warehouse_name,
             r.geo_name,
-            r.box_delivery_base,
-            r.box_delivery_coef_expr,
-            r.box_delivery_liter,
-            r.box_delivery_marketplace_base,
-            r.box_delivery_marketplace_coef_expr,
-            r.box_delivery_marketplace_liter,
-            r.box_storage_base,
-            r.box_storage_coef_expr,
-            r.box_storage_liter,
-            r.updated_at,
+            show(r.box_delivery_base),
+            show(r.box_delivery_coef_expr),
+            show(r.box_delivery_liter),
+            show(r.box_delivery_marketplace_base),
+            show(r.box_delivery_marketplace_coef_expr),
+            show(r.box_delivery_marketplace_liter),
+            show(r.box_storage_base),
+            show(r.box_storage_coef_expr),
+            show(r.box_storage_liter),
         ]),
     ];
 
@@ -56,4 +54,15 @@ export function scheduleSheetsHourly() {
     cron.schedule("5 * * * *", () => {
         runSheetsUpdateOnce().catch((e) => console.error("updateSheets error:", e));
     });
+}
+
+function show(v: number | null): string {
+    return v == null ? "-" : String(v);
+}
+
+function formatDate(d: string | Date | null): string {
+    if (!d) return "";
+    const date = typeof d === "string" ? new Date(d) : d;
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toISOString().slice(0, 10); // YYYY-MM-DD
 }
