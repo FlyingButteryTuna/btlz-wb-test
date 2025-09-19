@@ -64,10 +64,7 @@ export async function upsertDailyTariffs(dateIso: string, warehouses: any[]) {
 
 export async function selectTariffsForDateSorted(dateIso: string) {
     return knex("daily_box_tariffs")
+        .select("*", knex.raw("COALESCE(box_delivery_coef_expr, box_delivery_marketplace_coef_expr) as effective_coef"))
         .where({ date: dateIso })
-        .orderBy([
-            { column: "box_delivery_coef_expr", order: "asc", nulls: "last" as const },
-            { column: "warehouse_name", order: "asc" },
-        ])
-        .select("*");
+        .orderBy("effective_coef", "asc");
 }
