@@ -19,6 +19,11 @@ const envSchema = z.object({
             .regex(/^[0-9]+$/)
             .transform((value) => parseInt(value)),
     ]),
+    WB_API_KEY: z.string(),
+    GOOGLE_PROJECT_ID: z.string(),
+    GOOGLE_CLIENT_EMAIL: z.string(),
+    GOOGLE_PRIVATE_KEY: z.string(),
+    TEST_SPREADSHEET_IDS: z.string().min(1, "TEST_SPREADSHEET_IDS must not be empty"),
 });
 
 const env = envSchema.parse({
