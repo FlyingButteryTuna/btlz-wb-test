@@ -34,6 +34,11 @@ const env = envSchema.parse({
     POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
     NODE_ENV: process.env.NODE_ENV,
     APP_PORT: process.env.APP_PORT,
+    WB_API_KEY: process.env.WB_API_KEY,
+    GOOGLE_PROJECT_ID: process.env.GOOGLE_PROJECT_ID,
+    GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL,
+    GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY,
+    TEST_SPREADSHEET_IDS: process.env.TEST_SPREADSHEET_IDS,
 });
 
 export default env;

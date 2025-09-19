@@ -1,3 +1,4 @@
+import env from "#config/env/env.js";
 import axios, { AxiosError } from "axios";
 import { WbBoxTariffsResponse } from "#types/wb.js";
 import { throttle } from "#utils/throttle.js";
@@ -7,7 +8,7 @@ const MAX_ATTEMPTS = 3;
 const REQ_TIMEOUT_MS = 15_000;
 
 function getAuthHeader(): string {
-    const v = process.env.WB_API_KEY?.trim();
+    const v = env.WB_API_KEY?.trim();
     if (!v) {
         throw new Error("WB_API_KEY is not set");
     }

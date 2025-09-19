@@ -1,10 +1,11 @@
+import env from "#config/env/env.js";
 import { google } from "googleapis";
 
 const SHEET_TITLE = "stocks_coefs";
 
 function auth() {
-    const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-    const rawKey = process.env.GOOGLE_PRIVATE_KEY;
+    const clientEmail = env.GOOGLE_CLIENT_EMAIL;
+    const rawKey = env.GOOGLE_PRIVATE_KEY;
     if (!clientEmail || !rawKey) {
         throw new Error("Google credentials are not set (GOOGLE_CLIENT_EMAIL / GOOGLE_PRIVATE_KEY)");
     }

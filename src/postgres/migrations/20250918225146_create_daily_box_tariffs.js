@@ -1,4 +1,7 @@
-/** @param {import("knex").Knex} knex */
+/**
+ * @param {import("knex").Knex} knex
+ * @returns {Promise<void>}
+ */
 export async function up(knex) {
     await knex.schema.createTable("daily_box_tariffs", (t) => {
         t.date("date").notNullable();
@@ -24,7 +27,10 @@ export async function up(knex) {
     });
 }
 
-/** @param {import("knex").Knex} knex */
+/**
+ * @param {import("knex").Knex} knex
+ * @returns {Promise<void>}
+ */
 export async function down(knex) {
     await knex.schema.dropTable("daily_box_tariffs");
 }
